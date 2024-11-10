@@ -1,0 +1,58 @@
+#include <p18f4520.h>
+#include <delays.h>
+#pragma config OSC = HS 
+#pragma config WDT = OFF 
+#pragma config LVP = OFF 
+#pragma config PBADEN = OFF
+#define BUZZER PORTAbits.RA3 
+#define SWITCH0 PORTBbits.RB0 
+#define SWITCH1 PORTBbits.RB1 
+
+void main(void)
+{
+    TRISA = 0x00; 
+    TRISB = 0xff; 
+    TRISD = 0x00;
+    PORTD = 0xff; 
+    BUZZER = 0x00;
+
+    while(1)
+    {
+        if(SWITCH0 == 0)
+        {
+            while(1)
+            {
+                BUZZER = 1;
+                PORTD = 0x37;
+                Delay10KTCYx(100);
+                PORTD = 0x3B;
+                Delay10KTCYx(100);
+                PORTD = 0x3D;
+                Delay10KTCYx(100);
+                PORTD = 0x3E;
+                Delay10KTCYx(100);
+                
+                if(SWITCH1 == 0)
+                    break;
+            }
+        }
+        else if(SWITCH1 == 0)
+        {
+            while(1)
+            {
+                BUZZER = 0;
+                PORTD = 0xCE;
+                Delay10KTCYx(100);
+                PORTD = 0xCD;
+                Delay10KTCYx(100);
+                PORTD = 0xCB;
+                Delay10KTCYx(100);
+                PORTD = 0xC7;
+                Delay10KTCYx(100);
+                
+                if(SWITCH0 == 0)
+                    break;
+            }
+        }
+    }
+}

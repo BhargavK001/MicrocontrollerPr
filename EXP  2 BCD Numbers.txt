@@ -1,0 +1,22 @@
+#include<reg51.h>
+void delay(int x)
+{
+	int i,j;
+	for(i=0;i<=x;i++)
+	{
+		for(j=0;j<1275;j++);
+	}
+}
+void main()
+{
+	int a[16]={0xF6,0x90,0x7A,0xDA,0x9C,0xCE,0xEE,0x92,0xFE,0xDE,0xBE,0xFE,0x66,0xF6,0x6E,0xD0};
+	int b;
+	while(1)
+	{
+		for(b=0;b<=16;b++)
+		{
+			P0=~a[b];
+			delay(300);
+	}
+}
+}

@@ -1,0 +1,50 @@
+EXP 1 MICRO Printing
+
+ORG 0000H
+MOV 35,'M'
+MOV 36,'I'
+MOV 37,'C'
+MOV 38,'R'
+MOV 39,'O'
+MOV 60H,35H
+MOV 61H,36H
+MOV 62H,37H
+MOV 63H,38H
+MOV 64H,39H
+END
+---------------------------------------------------------------
+MOVE DATA FROM EXTERNAL RAM ADDRESS FROM 0020H TO 0025 TO INTERNAL RAM ADDRESSE FROM 45H TO 4AH
+------------------------------------------------------------
+ORG 0000H
+MOV DPTR,#0020H
+MOV R1,#05
+MOV R0,#45
+L1:MOVX A ,@DPTR
+MOV @R0,A
+INC DPTR
+INC R0
+DJNZ R1,L1
+END
+--------------------------------------------------------------------
+TO STORE STRING "MODERN" ON ROM SPACE 200H. TRANSFER THAT STRING INTO RAM LOCATIONS STARTING AT 40H.
+--------------------------------------------------------------------
+ORG 0000H
+MOV DPTR,#0200H
+MOV R0,#40H
+MOV R1,#50H
+MOV R2,#06H
+MOV R3,#06H
+L1: CLR A
+MOVC A,@A+DPTR
+MOV @R0,A
+PUSH ACC
+INC DPTR
+INC R0
+DJNZ R2,L1
+L2: POP ACC
+MOV @R1,A
+INC R1
+DJNZ R3,L2
+ORG 0200H
+DB 'MODERN'
+END
